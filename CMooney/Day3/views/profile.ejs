@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Character Profile</title>
+  </head>
+  <body>
+    <h1>Hello Everyone (I don't want to be here)</h1>
+    <div id="content">
+    </div>
+  </body>
+  <script type="text/javascript">
+    var characterData = <%-sendData-%>;
+    if (characterData) {
+      var contentBox = document.getElementById('content');
+      let nameHeader = document.createElement('h2');
+      let nameText = document.createTextNode(characterData.name);
+      nameHeader.append(nameText);
+      contentBox.append(nameHeader)
+
+      let statsHeader = document.createElement('h3');
+      statsHeader.innerHTML = "Stats"
+      let statsBox = document.createElement('div');
+      statsBox.innerHTML = JSON.stringify(characterData.stats)
+      content.append(statsHeader)
+      content.append(statsBox)
+
+      for (var slot of Object.keys(characterData.equiptment)) {
+        let slotHeader = document.createElement('h3');
+        slotHeader.innerHTML = slot;
+        let slotBox = document.createElement('div');
+        slotBox.innerHTML = JSON.stringify(characterData.equpitment[slot])
+        content.append(slotHeader)
+        content.append(slotBox)
+      }
+
+    };
+  </script>
+</html>
