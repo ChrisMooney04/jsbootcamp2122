@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+
+<head>
+  <meta charset="utf-8">
+  <title>Character Profile</title>
+</head>
+
+<body>
+  <h1>Hello Everyone (I don't want to be here)</h1>
+  <div id="content">
+  </div>
+</body>
+<script type="text/javascript">
+  var characterData = <%-sendData -%> ;
+
+
+  if (characterData) {
+    //Find the Existing content box and make it a JS object
+    var contentBox = document.getElementById('content');
+    //Create a h2, put the character name in, and put it into the content box
+    let nameHeader = document.createElement('h2');
+    nameHeader.innerHTML = characterData.name;
+    contentBox.append(nameHeader)
+    //Create a new bow just for Profile Stats
+    let profileBox = document.createElement('div');
+    profileBox.id = "profileBox"
+    //Put it in the Content Box
+    contentBox.append(profileBox)
+
+
+
+    //Put all stats into one header in the profileBox
+    let statsHeader = document.createElement('h3');
+    statsHeader.innerHTML = "Stats"
+    let statsBox = document.createElement('div');
+    statsBox.innerHTML = JSON.stringify(characterData.stats)
+    profileBox.append(statsHeader)
+    profileBox.append(statsBox)
+
+    //Object.keys returns a list of all property names in a given Object
+    //For..of will loop through each key name/key
+    for (var slot of Object.keys(characterData.equiptment)) {
+      //Each equiptment slot will have its own header/box
+      let slotHeader = document.createElement('h3');
+      slotHeader.innerHTML = slot;
+      //Insert data of the slot into a box
+      let slotBox = document.createElement('div');
+      slotBox.innerHTML = JSON.stringify(characterData.equiptment[slot])
+      //Add the equiptment slot to the profileBox
+      profileBox.append(slotHeader)
+      profileBox.append(slotBox)
+    }
+
+  };
+</script>
+<!--Use Accordion Widget from JQuery UI-->
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<script>
+  $(function() {
+    $("#profileBox").accordion({
+      collapsible: true
+    });
+  });
+</script>
+
+</html>
